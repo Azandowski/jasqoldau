@@ -1,0 +1,26 @@
+name: flutter_instagram_stories_example
+description: A new Flutter application.
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.1.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # change the path later
+  flutter_instagram_stories: any
+#    path: ../
+
+dev_dependencies:
+  flutter_lints: ^1.0.4
+
+  flutter_test:
+    sdk: flutter
+
+
+flutter:
+
+  uses-material-design: true
