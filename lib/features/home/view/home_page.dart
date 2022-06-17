@@ -4,6 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_instagram_stories/flutter_instagram_stories.dart';
+import 'package:zhasqoldau/app/app_router.dart';
+import 'package:zhasqoldau/features/home/view/widgets/avatar.dart';
 
 import '../../auth/bloc/auth_bloc.dart';
 
@@ -28,7 +30,14 @@ class _HomePageState extends State<HomePage> {
     final user = context.select((AuthBloc bloc) => bloc.state.user);
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Flutter instagram stories"),
+        title: const Text('Home'),
+        actions: <Widget>[
+          IconButton(
+            key: const Key('homePage_logout_iconButton'),
+            icon: const Icon(Icons.exit_to_app),
+            onPressed: () => context.read<AuthBloc>().add(AuthLogout()),
+          )
+        ],
       ),
       body: Column(
         children: <Widget>[
@@ -39,7 +48,7 @@ class _HomePageState extends State<HomePage> {
               _backFromStoriesAlert();
             },
             iconTextStyle: const TextStyle(
-              fontSize: 14.0,
+              fontSize: 8.0,
               fontWeight: FontWeight.bold,
               color: Colors.black,
             ),
@@ -58,10 +67,10 @@ class _HomePageState extends State<HomePage> {
                 ),
               ],
             ),
-            iconWidth: 150.0,
-            iconHeight: 150.0,
+            iconWidth: 80.0,
+            iconHeight: 80.0,
             textInIconPadding:
-                const EdgeInsets.only(left: 8.0, right: 8.0, bottom: 12.0),
+                const EdgeInsets.only(left: 0, right: 0, bottom: 2.0),
             //how long story lasts in seconds
             imageStoryDuration: 7,
             progressPosition: ProgressPosition.top,
@@ -91,17 +100,16 @@ class _HomePageState extends State<HomePage> {
               vertical: 8,
             ),
           ),
-          const Center(
-            child: Padding(
-              padding: EdgeInsets.all(20.0),
-              child: Text(
-                "App's functuonality",
-                style: TextStyle(
-                  fontSize: 26,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
+          Avatar(photo: user.photo),
+          const SizedBox(height: 4),
+          Text(user.email ?? '', style: textTheme.headline6),
+          const SizedBox(height: 4),
+          Text(user.name ?? '', style: textTheme.headline5),
+          ElevatedButton(
+            child: Text('Вузы'),
+            onPressed: () {
+              Navigator.of(context).pushNamed(AppPages.universities);
+            },
           ),
         ],
       ),

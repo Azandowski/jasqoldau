@@ -25,6 +25,9 @@ dependencies:
   flutter_instagram_stories: 
     path: packages/flutter_instagram_stories-1.0.1+1
   cloud_firestore: ^3.1.18
+  sleek_circular_slider: ^2.0.1
+  geocoding: ^2.0.4
+  flutter_map: ^1.1.0
 
 dev_dependencies:
   flutter_test:
