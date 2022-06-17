@@ -137,7 +137,7 @@ class StoryItem {
                           caption,
                           style: TextStyle(
                             fontSize: 15,
-                            color: Colors.black,
+                            color: Colors.white,
                           ),
                           textAlign: TextAlign.center,
                         ),

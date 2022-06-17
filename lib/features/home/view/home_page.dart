@@ -6,6 +6,7 @@ import 'package:zhasqoldau/app/app_router.dart';
 import 'package:zhasqoldau/features/home/view/widgets/avatar.dart';
 
 import '../../auth/bloc/auth_bloc.dart';
+import 'widgets/sliding_cards.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -28,7 +29,7 @@ class _HomePageState extends State<HomePage> {
     final user = context.select((AuthBloc bloc) => bloc.state.user);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Home'),
+        title: const Text('JasQoldau'),
         actions: <Widget>[
           IconButton(
             key: const Key('homePage_logout_iconButton'),
@@ -38,6 +39,7 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           FlutterInstagramStories(
             collectionDbName: collectionDbName,
@@ -103,6 +105,8 @@ class _HomePageState extends State<HomePage> {
           Text(user.email ?? '', style: textTheme.headline6),
           const SizedBox(height: 4),
           Text(user.name ?? '', style: textTheme.headline5),
+          Header(),
+          SlidingCardsView(),
           ElevatedButton(
             child: Text('Вузы'),
             onPressed: () {
@@ -130,6 +134,22 @@ class _HomePageState extends State<HomePage> {
             },
           ),
         ],
+      ),
+    );
+  }
+}
+
+class Header extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+      child: Text(
+        'Общая информация',
+        style: TextStyle(
+          fontSize: 22,
+          fontWeight: FontWeight.w600,
+        ),
       ),
     );
   }
