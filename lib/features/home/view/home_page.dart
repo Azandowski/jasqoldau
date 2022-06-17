@@ -38,7 +38,7 @@ class HomePage extends StatelessWidget {
             ElevatedButton(
               child: Text('Вузы'),
               onPressed: () {
-                Navigator.of(context).pushNamed(AppPages.universities);
+                Navigator.of(context).pushNamed(AppPages.miniAppsHub);
               },
             ),
           ],
