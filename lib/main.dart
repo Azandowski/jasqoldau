@@ -1,79 +1,63 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:zhasqoldau/app/app_router.dart';
+import 'package:zhasqoldau/core/services/navigation_service.dart';
 import 'package:zhasqoldau/features/auth/bloc/auth_bloc.dart';
 import 'package:zhasqoldau/features/auth/repository/auth_repository.dart';
-import 'package:zhasqoldau/features/sign_up/page/sign_up_page.dart';
-import 'package:zhasqoldau/route.dart';
 import 'package:zhasqoldau/theme.dart';
-
-import 'features/login/page/login_page.dart';
-
-final GlobalKey<NavigatorState> navigatorKey = new GlobalKey<NavigatorState>();
+import './locator.dart' as di;
 
 void main() async {
   return BlocOverrides.runZoned(
     () async {
       WidgetsFlutterBinding.ensureInitialized();
       await Firebase.initializeApp();
+      await di.init();
       runApp(
-        App(
-          authenticationRepository: AuthenticationRepository(),
-        ),
+        App(),
       );
     },
   );
 }
 
-// class MainApp extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return MultiBlocProvider(
-//       providers: [
-//         // BlocProvider.value(value: serviceLocator.sl<ChatsCubit>()),
-//         // BlocProvider(create: (_) => serviceLocator.sl<CategoryBloc>()),
-//         // BlocProvider.value(value: serviceLocator.sl<AuthBloc>())
-//       ],
-//       child: MaterialApp(
-//         home: SplashScreen(),
-//         navigatorKey: navigatorKey,
-//         routes: onGenerateAppViewPages(state, pages),
-//       ),
-//     );
-//   }
-// }
-
-class App extends StatelessWidget {
+class App extends StatefulWidget {
   const App({
     Key? key,
-    required AuthenticationRepository authenticationRepository,
-  })  : _authenticationRepository = authenticationRepository,
+  }) :
         super(key: key);
 
-  final AuthenticationRepository _authenticationRepository;
-
   @override
-  Widget build(BuildContext context) {
-    return RepositoryProvider.value(
-      value: _authenticationRepository,
-      child: BlocProvider(
-        create: (_) => AuthBloc(
-          repository: _authenticationRepository,
-        ),
-        child: const AppView(),
-      ),
-    );
-  }
+  State<App> createState() => _AppState();
 }
 
-class AppView extends StatelessWidget {
-  const AppView({Key? key}) : super(key: key);
+class _AppState extends State<App> {
+  late final _authBloc = di.sl<AuthBloc>();
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: theme,
-      home: SignUpPage(),
+    return BlocProvider(
+      create: (_) => _authBloc,
+      child: MaterialApp(
+        theme: theme,
+        navigatorKey: NavigationService.navKey,
+        onGenerateRoute: AppRouter.onGenerateRoute,
+        builder: (context, child) {
+          return BlocListener<AuthBloc, AuthState>(
+            bloc: _authBloc,
+            listener: (BuildContext context, AuthState state) {
+              final navigationService = di.sl<NavigationService>();
+              state.mapOrNull(
+                authenticated: (_) =>
+                    navigationService.pushAndRemoveUntil(AppPages.home),
+                unauthenticated: (_) =>
+                    navigationService.pushAndRemoveUntil(AppPages.signIn),
+              );
+            },
+            child: child,
+          );
+        },
+      ),
     );
   }
 }

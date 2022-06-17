@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart' show kIsWeb;
-import 'package:flutter_cache/Cache.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:meta/meta.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
@@ -159,6 +158,8 @@ class AuthenticationRepository {
         _firebaseAuth = firebaseAuth ?? firebase_auth.FirebaseAuth.instance,
         _googleSignIn = googleSignIn ?? GoogleSignIn.standard();
 
+  final _userMapper = UserMapper();
+
   final firebase_auth.FirebaseAuth _firebaseAuth;
   final GoogleSignIn _googleSignIn;
   /// Whether or not the current environment is web
@@ -179,15 +180,16 @@ class AuthenticationRepository {
   Stream<User> get user {
     return _firebaseAuth.authStateChanges().map((firebaseUser) {
       final user = firebaseUser == null ? User.empty : firebaseUser.toUser;
-      cache.write( userCacheKey, user);
+      cache.write(userCacheKey, _userMapper.toJson(user));
       return user;
     });
   }
 
   /// Returns the current cached user.
   /// Defaults to [User.empty] if there is no cached user.
-  User get currentUser {
-    return cache.load(userCacheKey, User.empty) as User;
+  Future<User> get currentUser async {
+    final json = await cache.load(userCacheKey, _userMapper.toJson(User.empty));
+    return _userMapper.fromJson(json);
   }
 
   /// Creates a new user with the provided [email] and [password].
@@ -272,6 +274,31 @@ class AuthenticationRepository {
 
 extension on firebase_auth.User {
   User get toUser {
-    return User(id: uid, email: email, name: displayName, photo: photoURL);
+    return User(
+      id: uid,
+      email: email,
+      name: displayName,
+      photo: photoURL,
+    );
+  }
+}
+
+class UserMapper {
+  Map<String, dynamic> toJson(User user) {
+    return {
+      'uid': user.id,
+      'email': user.email,
+      'name': user.name,
+      'photo': user.photo,
+    };
+  }
+
+  User fromJson(Map<String, dynamic> json) {
+    return User(
+      id: json['uid'] as String,
+      email: json['email'] as String?,
+      name: json['name'] as String?,
+      photo: json['photo'] as String?,
+    );
   }
 }

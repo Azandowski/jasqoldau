@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:zhasqoldau/core/bloc_factory.dart';
 import 'package:zhasqoldau/features/login/cubit/login_cubit.dart';
-
-import '../../auth/repository/auth_repository.dart';
 import 'login_form.dart';
 class LoginPage extends StatelessWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  final BlocCreator<LoginCubit> blocCreator;
 
-  static Page page() => const MaterialPage<void>(child: LoginPage());
+  const LoginPage({
+    Key? key,
+    required this.blocCreator,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,8 +17,8 @@ class LoginPage extends StatelessWidget {
       appBar: AppBar(title: const Text('Login')),
       body: Padding(
         padding: const EdgeInsets.all(8),
-        child: BlocProvider(
-          create: (_) => LoginCubit(context.read<AuthenticationRepository>()),
+        child: BlocProvider<LoginCubit>(
+          create: (_) => blocCreator(),
           child: const LoginForm(),
         ),
       ),

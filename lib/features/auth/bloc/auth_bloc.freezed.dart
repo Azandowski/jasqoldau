@@ -327,22 +327,24 @@ abstract class AuthUserChanged extends AuthEvent {
 
 /// @nodoc
 mixin _$AuthState {
-  User get user => throw _privateConstructorUsedError;
   AppStatus get status => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function(AppStatus status, dynamic user) unknown,
     required TResult Function(User user, AppStatus status) authenticated,
     required TResult Function(AppStatus status, User user) unauthenticated,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(AppStatus status, dynamic user)? unknown,
     TResult Function(User user, AppStatus status)? authenticated,
     TResult Function(AppStatus status, User user)? unauthenticated,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function(AppStatus status, dynamic user)? unknown,
     TResult Function(User user, AppStatus status)? authenticated,
     TResult Function(AppStatus status, User user)? unauthenticated,
     required TResult orElse(),
@@ -350,18 +352,21 @@ mixin _$AuthState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_AuthUnknown value) unknown,
     required TResult Function(_AuthAuthenticated value) authenticated,
     required TResult Function(_AuthUnauthenticated value) unauthenticated,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_AuthUnknown value)? unknown,
     TResult Function(_AuthAuthenticated value)? authenticated,
     TResult Function(_AuthUnauthenticated value)? unauthenticated,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_AuthUnknown value)? unknown,
     TResult Function(_AuthAuthenticated value)? authenticated,
     TResult Function(_AuthUnauthenticated value)? unauthenticated,
     required TResult orElse(),
@@ -377,7 +382,7 @@ mixin _$AuthState {
 abstract class $AuthStateCopyWith<$Res> {
   factory $AuthStateCopyWith(AuthState value, $Res Function(AuthState) then) =
       _$AuthStateCopyWithImpl<$Res>;
-  $Res call({User user, AppStatus status});
+  $Res call({AppStatus status});
 }
 
 /// @nodoc
@@ -390,20 +395,181 @@ class _$AuthStateCopyWithImpl<$Res> implements $AuthStateCopyWith<$Res> {
 
   @override
   $Res call({
-    Object? user = freezed,
     Object? status = freezed,
   }) {
     return _then(_value.copyWith(
-      user: user == freezed
-          ? _value.user
-          : user // ignore: cast_nullable_to_non_nullable
-              as User,
       status: status == freezed
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as AppStatus,
     ));
   }
+}
+
+/// @nodoc
+abstract class _$$_AuthUnknownCopyWith<$Res>
+    implements $AuthStateCopyWith<$Res> {
+  factory _$$_AuthUnknownCopyWith(
+          _$_AuthUnknown value, $Res Function(_$_AuthUnknown) then) =
+      __$$_AuthUnknownCopyWithImpl<$Res>;
+  @override
+  $Res call({AppStatus status, dynamic user});
+}
+
+/// @nodoc
+class __$$_AuthUnknownCopyWithImpl<$Res> extends _$AuthStateCopyWithImpl<$Res>
+    implements _$$_AuthUnknownCopyWith<$Res> {
+  __$$_AuthUnknownCopyWithImpl(
+      _$_AuthUnknown _value, $Res Function(_$_AuthUnknown) _then)
+      : super(_value, (v) => _then(v as _$_AuthUnknown));
+
+  @override
+  _$_AuthUnknown get _value => super._value as _$_AuthUnknown;
+
+  @override
+  $Res call({
+    Object? status = freezed,
+    Object? user = freezed,
+  }) {
+    return _then(_$_AuthUnknown(
+      status: status == freezed
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as AppStatus,
+      user: user == freezed ? _value.user : user,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_AuthUnknown extends _AuthUnknown with DiagnosticableTreeMixin {
+  const _$_AuthUnknown(
+      {this.status = AppStatus.unknown, this.user = User.empty})
+      : super._();
+
+  @override
+  @JsonKey()
+  final AppStatus status;
+  @override
+  @JsonKey()
+  final dynamic user;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'AuthState.unknown(status: $status, user: $user)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'AuthState.unknown'))
+      ..add(DiagnosticsProperty('status', status))
+      ..add(DiagnosticsProperty('user', user));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_AuthUnknown &&
+            const DeepCollectionEquality().equals(other.status, status) &&
+            const DeepCollectionEquality().equals(other.user, user));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(status),
+      const DeepCollectionEquality().hash(user));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_AuthUnknownCopyWith<_$_AuthUnknown> get copyWith =>
+      __$$_AuthUnknownCopyWithImpl<_$_AuthUnknown>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(AppStatus status, dynamic user) unknown,
+    required TResult Function(User user, AppStatus status) authenticated,
+    required TResult Function(AppStatus status, User user) unauthenticated,
+  }) {
+    return unknown(status, user);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(AppStatus status, dynamic user)? unknown,
+    TResult Function(User user, AppStatus status)? authenticated,
+    TResult Function(AppStatus status, User user)? unauthenticated,
+  }) {
+    return unknown?.call(status, user);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(AppStatus status, dynamic user)? unknown,
+    TResult Function(User user, AppStatus status)? authenticated,
+    TResult Function(AppStatus status, User user)? unauthenticated,
+    required TResult orElse(),
+  }) {
+    if (unknown != null) {
+      return unknown(status, user);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_AuthUnknown value) unknown,
+    required TResult Function(_AuthAuthenticated value) authenticated,
+    required TResult Function(_AuthUnauthenticated value) unauthenticated,
+  }) {
+    return unknown(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_AuthUnknown value)? unknown,
+    TResult Function(_AuthAuthenticated value)? authenticated,
+    TResult Function(_AuthUnauthenticated value)? unauthenticated,
+  }) {
+    return unknown?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_AuthUnknown value)? unknown,
+    TResult Function(_AuthAuthenticated value)? authenticated,
+    TResult Function(_AuthUnauthenticated value)? unauthenticated,
+    required TResult orElse(),
+  }) {
+    if (unknown != null) {
+      return unknown(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _AuthUnknown extends AuthState {
+  const factory _AuthUnknown({final AppStatus status, final dynamic user}) =
+      _$_AuthUnknown;
+  const _AuthUnknown._() : super._();
+
+  @override
+  AppStatus get status => throw _privateConstructorUsedError;
+  dynamic get user => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(ignore: true)
+  _$$_AuthUnknownCopyWith<_$_AuthUnknown> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -449,12 +615,14 @@ class __$$_AuthAuthenticatedCopyWithImpl<$Res>
 
 class _$_AuthAuthenticated extends _AuthAuthenticated
     with DiagnosticableTreeMixin {
-  const _$_AuthAuthenticated({required this.user, required this.status})
+  const _$_AuthAuthenticated(
+      {required this.user, this.status = AppStatus.authenticated})
       : super._();
 
   @override
   final User user;
   @override
+  @JsonKey()
   final AppStatus status;
 
   @override
@@ -495,6 +663,7 @@ class _$_AuthAuthenticated extends _AuthAuthenticated
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function(AppStatus status, dynamic user) unknown,
     required TResult Function(User user, AppStatus status) authenticated,
     required TResult Function(AppStatus status, User user) unauthenticated,
   }) {
@@ -504,6 +673,7 @@ class _$_AuthAuthenticated extends _AuthAuthenticated
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(AppStatus status, dynamic user)? unknown,
     TResult Function(User user, AppStatus status)? authenticated,
     TResult Function(AppStatus status, User user)? unauthenticated,
   }) {
@@ -513,6 +683,7 @@ class _$_AuthAuthenticated extends _AuthAuthenticated
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function(AppStatus status, dynamic user)? unknown,
     TResult Function(User user, AppStatus status)? authenticated,
     TResult Function(AppStatus status, User user)? unauthenticated,
     required TResult orElse(),
@@ -526,6 +697,7 @@ class _$_AuthAuthenticated extends _AuthAuthenticated
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_AuthUnknown value) unknown,
     required TResult Function(_AuthAuthenticated value) authenticated,
     required TResult Function(_AuthUnauthenticated value) unauthenticated,
   }) {
@@ -535,6 +707,7 @@ class _$_AuthAuthenticated extends _AuthAuthenticated
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_AuthUnknown value)? unknown,
     TResult Function(_AuthAuthenticated value)? authenticated,
     TResult Function(_AuthUnauthenticated value)? unauthenticated,
   }) {
@@ -544,6 +717,7 @@ class _$_AuthAuthenticated extends _AuthAuthenticated
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_AuthUnknown value)? unknown,
     TResult Function(_AuthAuthenticated value)? authenticated,
     TResult Function(_AuthUnauthenticated value)? unauthenticated,
     required TResult orElse(),
@@ -558,10 +732,9 @@ class _$_AuthAuthenticated extends _AuthAuthenticated
 abstract class _AuthAuthenticated extends AuthState {
   const factory _AuthAuthenticated(
       {required final User user,
-      required final AppStatus status}) = _$_AuthAuthenticated;
+      final AppStatus status}) = _$_AuthAuthenticated;
   const _AuthAuthenticated._() : super._();
 
-  @override
   User get user => throw _privateConstructorUsedError;
   @override
   AppStatus get status => throw _privateConstructorUsedError;
@@ -614,10 +787,12 @@ class __$$_AuthUnauthenticatedCopyWithImpl<$Res>
 
 class _$_AuthUnauthenticated extends _AuthUnauthenticated
     with DiagnosticableTreeMixin {
-  const _$_AuthUnauthenticated({required this.status, required this.user})
+  const _$_AuthUnauthenticated(
+      {this.status = AppStatus.unauthenticated, required this.user})
       : super._();
 
   @override
+  @JsonKey()
   final AppStatus status;
   @override
   final User user;
@@ -660,6 +835,7 @@ class _$_AuthUnauthenticated extends _AuthUnauthenticated
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function(AppStatus status, dynamic user) unknown,
     required TResult Function(User user, AppStatus status) authenticated,
     required TResult Function(AppStatus status, User user) unauthenticated,
   }) {
@@ -669,6 +845,7 @@ class _$_AuthUnauthenticated extends _AuthUnauthenticated
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(AppStatus status, dynamic user)? unknown,
     TResult Function(User user, AppStatus status)? authenticated,
     TResult Function(AppStatus status, User user)? unauthenticated,
   }) {
@@ -678,6 +855,7 @@ class _$_AuthUnauthenticated extends _AuthUnauthenticated
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function(AppStatus status, dynamic user)? unknown,
     TResult Function(User user, AppStatus status)? authenticated,
     TResult Function(AppStatus status, User user)? unauthenticated,
     required TResult orElse(),
@@ -691,6 +869,7 @@ class _$_AuthUnauthenticated extends _AuthUnauthenticated
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_AuthUnknown value) unknown,
     required TResult Function(_AuthAuthenticated value) authenticated,
     required TResult Function(_AuthUnauthenticated value) unauthenticated,
   }) {
@@ -700,6 +879,7 @@ class _$_AuthUnauthenticated extends _AuthUnauthenticated
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_AuthUnknown value)? unknown,
     TResult Function(_AuthAuthenticated value)? authenticated,
     TResult Function(_AuthUnauthenticated value)? unauthenticated,
   }) {
@@ -709,6 +889,7 @@ class _$_AuthUnauthenticated extends _AuthUnauthenticated
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_AuthUnknown value)? unknown,
     TResult Function(_AuthAuthenticated value)? authenticated,
     TResult Function(_AuthUnauthenticated value)? unauthenticated,
     required TResult orElse(),
@@ -722,13 +903,12 @@ class _$_AuthUnauthenticated extends _AuthUnauthenticated
 
 abstract class _AuthUnauthenticated extends AuthState {
   const factory _AuthUnauthenticated(
-      {required final AppStatus status,
+      {final AppStatus status,
       required final User user}) = _$_AuthUnauthenticated;
   const _AuthUnauthenticated._() : super._();
 
   @override
   AppStatus get status => throw _privateConstructorUsedError;
-  @override
   User get user => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
