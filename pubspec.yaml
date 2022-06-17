@@ -11,11 +11,21 @@ dependencies:
   firebase_auth: ^3.3.20
   firebase_core: ^1.18.0
   get_it: ^7.2.0
+  freezed: ^2.0.3+1
+  freezed_annotation: ^2.0.3
+  google_sign_in: ^5.3.3
+  equatable: ^2.0.3
+  formz: ^0.4.1
+  flutter_cache: 0.1.0
+  font_awesome_flutter: ^10.1.0
+  flutter_form_builder: ^7.3.1
+  google_fonts: ^3.0.1
 
 dev_dependencies:
   bloc_test: ^9.0.0
   flutter_test:
     sdk: flutter
+  build_runner: ^2.1.11
   mocktail: ^0.2.0
 
 flutter:
