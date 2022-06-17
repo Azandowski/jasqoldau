@@ -22,6 +22,9 @@ dependencies:
   google_fonts: ^3.0.1
   rxdart: ^0.27.4
   http: ^0.13.4
+  flutter_instagram_stories: 
+    path: packages/flutter_instagram_stories-1.0.1+1
+  cloud_firestore: ^3.1.18
 
 dev_dependencies:
   flutter_test:
