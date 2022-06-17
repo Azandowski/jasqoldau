@@ -73,10 +73,8 @@ class MiniAppView extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Container(
-            height: 40.0,
-            width: 40.0,
-            color: Colors.blue,
+          Image.asset(
+            miniApp.iconPath,
           ),
           const SizedBox(height: 8.0),
           Text(miniApp.title),
