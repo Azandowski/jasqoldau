@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:zhasqoldau/app/app_router.dart';
 import 'package:zhasqoldau/features/home/view/widgets/avatar.dart';
 
 import '../../auth/bloc/auth_bloc.dart';
@@ -34,6 +35,12 @@ class HomePage extends StatelessWidget {
             Text(user.email ?? '', style: textTheme.headline6),
             const SizedBox(height: 4),
             Text(user.name ?? '', style: textTheme.headline5),
+            ElevatedButton(
+              child: Text('Вузы'),
+              onPressed: () {
+                Navigator.of(context).pushNamed(AppPages.universities);
+              },
+            ),
           ],
         ),
       ),

@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:zhasqoldau/app/app_router.dart';
 import 'package:zhasqoldau/core/services/navigation_service.dart';
 import 'package:zhasqoldau/features/auth/bloc/auth_bloc.dart';
-import 'package:zhasqoldau/features/auth/repository/auth_repository.dart';
 import 'package:zhasqoldau/theme.dart';
 import './locator.dart' as di;
 
