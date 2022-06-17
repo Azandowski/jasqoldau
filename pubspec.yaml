@@ -28,6 +28,7 @@ dependencies:
   sleek_circular_slider: ^2.0.1
   geocoding: ^2.0.4
   flutter_map: ^1.1.0
+  flutter_inappwebview: ^5.4.3+7
 
 dev_dependencies:
   flutter_test:

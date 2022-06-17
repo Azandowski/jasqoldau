@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:zhasqoldau/core/bloc_factory.dart';
 import 'package:zhasqoldau/features/login/page/login_page.dart';
+import 'package:zhasqoldau/features/mini-apps/hub/mini_apps_hub.dart';
 import 'package:zhasqoldau/features/sign_up/page/sign_up_page.dart';
 import 'package:zhasqoldau/features/universities/page/universities_page.dart';
 
 import '../features/auth/presentation/splash_page.dart';
 import '../features/home/view/home_page.dart';
+import '../features/mini-apps/mini-app/mini_app.dart';
 import '../features/universities/page/university_details.dart';
 
 class AppPages {
@@ -17,6 +19,8 @@ class AppPages {
   static const home = '/home';
   static const universities = '/universities';
   static const universityDetails = 'university-details';
+  static const miniAppsHub = 'mini-apps-hub';
+  static const miniApp = 'mini-app';
 }
 
 abstract class AppRouter {
@@ -46,6 +50,20 @@ abstract class AppRouter {
         return MaterialPageRoute(
           builder: (_) => UniversitiesPage(
             blocCreator: blocFactory.create,
+          ),
+        );
+      case AppPages.miniAppsHub:
+        return MaterialPageRoute(
+          builder: (_) => MiniAppsHub(
+            blocCreator: blocFactory.create,
+          ),
+        );
+      case AppPages.miniApp:
+        return MaterialPageRoute(
+          builder: (_) => MiniAppPage(
+            blocCreator: (({param1, param2}) => blocFactory.create(
+                  param1: settings.arguments,
+                )),
           ),
         );
       case AppPages.universityDetails:
